@@ -1,0 +1,41 @@
+// Variables
+
+$btn-font-sizes : 0.525rem;
+  
+
+//== Colors
+//
+// --------------------------------------------------
+$white:               #fff !default;
+$black:                 #3B3B3B !default;
+$gray-apple:           #fbfbfd;
+$gray-darker:           lighten($black, 13.5%) !default; // #222
+$gray-dark:             lighten($black, 20%) !default;   // #333
+$gray:                  #f4f4f8 !default; // #555
+$gray-light:            lighten($black, 46.7%) !default; // #777
+$gray-lighter:          lighten($black, 93.5%) !default; // #eee
+
+$brand-primary:       #FF4A57 !default;
+$brand:               #ff9156ed !default;
+$brand-light:         #dfedeb !default;
+$brand-noteworthy:    #f5dcb2 !default;
+$yellow:              #f2dab1;
+$white-dark:          #d9d9d9;
+$light-green:         #c2ddd8;
+
+
+
+
+// Mixins
+//== Breakpoints
+// For Container centered.
+$breakpoints: (
+    desktop: 769px,
+    );
+
+//== Media queries breakpoints
+@mixin desktop {
+    @media screen and  (min-width: map-get($breakpoints, desktop)) {
+      @content;
+    }
+  }
