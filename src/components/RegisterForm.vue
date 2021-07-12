@@ -1,10 +1,20 @@
 <template>
-  <v-form v-model="valid">
+  <v-form v-model="valid" ref="form" lazy-validation>
     <v-container>
       <v-row>
         
         
-
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="name"
+            :rules="nameRules"
+            label="Votre Pseudo"
+            required
+          ></v-text-field>
+        </v-col>
         <v-col
           cols="12"
           md="4"
@@ -21,9 +31,10 @@
           md="4"
         >
           <v-text-field
-            v-model="email"
-            :rules="emailRules"
+            v-model="password"
+            :rules="passwordRules"
             label="Mot de passe"
+            type="password"
             required
           ></v-text-field>
         </v-col>
@@ -32,14 +43,16 @@
           md="4"
         >
           <v-text-field
-            v-model="email"
-            :rules="emailRules"
+            v-model="confirmpassword"
+            :rules="confirmpasswordRules"
             label="Comfirmer votre Mot de passe"
+            type="password"
             required
           ></v-text-field>
         </v-col>
         
       </v-row>
+      <p class="errorpass">{{errormessage}}</p>
       <v-row class="form-link">
         <v-col
           cols="6"
@@ -55,8 +68,9 @@
       rounded
       color="red"
       class="creer"
+      @click="register"
     >
-      <router-link to="/login">Créer le compte</router-link>
+    Créer le compte
     </v-btn>
   </div>
           
@@ -78,20 +92,52 @@
 </template>
 <script>
   export default {
+    name: "Register",
     data: () => ({
-      valid: false,
-      firstname: '',
-      lastname: '',
+      valid: true,
+      name: '',
       nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
+        v => !!v || 'Votre pseudo est obligatoire',
+        v => v.length <= 6 || 'Minimum 6 characters',
       ],
       email: '',
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
+        v => !!v || 'Votre E-mail est obligatoire',
+        v => /.+@.+/.test(v) || 'E-mail doit etre valid',
       ],
+      password:'',
+      passwordRules: [
+        v => !!v || 'Le mot de passe est obligatoire',
+        v => v.length <= 10 || '10 characters maximum',
+      ],
+      confirmpassword:'',
+      confirmpasswordRules: [
+        v => !!v || 'La confirmation du mot de passe est obligatoire',
+        v => v.length <= 10 || '10 characters maximum',
+      ],
+      errormessage : "",
     }),
+    methods:{
+      register: function() {
+        this.$refs.form.validate()
+        if(this.password !== this.confirmpassword){
+          console.log('mdp error ')
+          this.errormessage = "Les mots de passe ne correspondent pas"
+        }else{
+          let user = {
+          name : this.name,
+          email: this.email,
+          password: this.password
+        }
+        console.log(user)
+        this.$store.dispatch("register",user).then(() => {
+        this.$router.push("/login");
+      })
+        }
+        
+
+    }
+    }
   }
 </script>
 <style lang="scss">
@@ -102,6 +148,14 @@
   margin: 10px;
 }
 .creer{
-  background-color:  #0277BD !important;
+  background-color:  green !important;
+}
+.errorpass{
+  text-align: center;
+  color: red;
+}
+.validpass{
+  text-align: center;
+  color:green;
 }
 </style>

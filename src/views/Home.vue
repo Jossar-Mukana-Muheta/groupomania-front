@@ -20,11 +20,9 @@
               <p class="content">{{elements.content}}</p>
             </div>
           </div>
-          <v-btn style="alignSelf: center;
-    marginLeft: 100px;
-    backgroundColor: red;" v-if="isAdmin == 1">X</v-btn>
         </article>
       </div>
+      <DeleteButton v-if="isAdmin === 'isAdmin'" :id="elements.uid"/>
     </div>
     
 </div>
@@ -35,6 +33,7 @@
   
   import { mapGetters } from 'vuex';
   import Logout from  "../components/Logout.vue"
+  import DeleteButton from "../components/DeleteButton.vue"
 
 
   
@@ -53,13 +52,15 @@
     components: {
     
       Textarea,
-      Logout
+      Logout,
+      DeleteButton
         
        
     },
     mounted () {
         this.$store.dispatch('loadItems')
     },
+    
     computed: {
       ...mapGetters({
         commentaires : "items"
@@ -77,7 +78,7 @@
 </script>
 <style lang="scss">
 .bloc-card{
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -101,6 +102,7 @@ p {
   padding: 30px;
       min-width: 70%;
     margin-top: 40px;
+    margin-bottom: 40px;
   + .tweet {
     margin-top: 20px;
   }

@@ -34,8 +34,7 @@
 </template>
 
 <script>
-
-
+import { mapGetters } from 'vuex';
 
 export default {
   name: "ProjetForm",
@@ -83,10 +82,10 @@ export default {
 
       this.$store.dispatch("AddItem", message).then(() => {
         this.reset();
-        this.$store.dispatch('loadItems').then(()=>{
-          
-        })
+        this.$store.dispatch("loadItems").then(() => {
+      })
       });
+      
     },
 
     reset() {
@@ -94,7 +93,9 @@ export default {
     }
   },
   computed: {
-    
+    ...mapGetters({
+      loadCommentaire : "items"
+    })
   }
 };
 </script>

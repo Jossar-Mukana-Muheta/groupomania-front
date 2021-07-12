@@ -23,6 +23,8 @@
       <v-btn
         color="orange"
         text
+        style="backgroundColor:red;color:white"
+        @click="deleteAccount"
       >
         Supprimer mon compte
       </v-btn>
@@ -39,7 +41,15 @@ export default {
       name: localStorage.getItem("name"),
       email: localStorage.getItem("email")
     }
-  }
+  },
+  methods:{
+      deleteAccount: function() {
+      this.$store.dispatch("deleteAccount").then(() => {
+        this.$router.push("/login");
+      })
+
+    }
+    },
 }
 </script>
 

@@ -76,6 +76,7 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 20vh;
+  min-height: 50vh;
 }
 
 form {
